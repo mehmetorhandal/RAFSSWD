@@ -9,7 +9,7 @@ import { Strong } from "../styled/Random";
 
 export default function Game({ history }) {
   const [score, setScore] = useState(0);
-  const MAX_SECONDS = 5;
+  const MAX_SECONDS = 90;
   const [ms, setMs] = useState(0);
   const [seconds, setSeconds] = useState(MAX_SECONDS);
 
@@ -45,6 +45,17 @@ export default function Game({ history }) {
     }
     return (zeros + num).slice(-length);
   };
+
+  const keyUpHandler = (e) => {
+    console.log(e.key);
+  };
+
+  useEffect(() => {
+    document.addEventListener("keyup", keyUpHandler);
+    return () => {
+      document.removeEventListener("keyup", keyUpHandler);
+    };
+  }, []);
 
   return (
     <StyledGame>
