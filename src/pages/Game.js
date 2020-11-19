@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useScore } from "../context/ScoreContext";
 import {
   StyledGame,
   StyledScore,
@@ -7,6 +6,7 @@ import {
   StyledCharacter,
 } from "../styled/Game";
 import { Strong } from "../styled/Random";
+import { useScore } from "../context/ScoreContext";
 
 export default function Game({ history }) {
   const MAX_SECONDS = 5;
@@ -22,6 +22,7 @@ export default function Game({ history }) {
     const currentTime = new Date();
     const interval = setInterval(() => updateTime(currentTime), 1);
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const updateTime = (startTime) => {
@@ -37,6 +38,14 @@ export default function Game({ history }) {
     setMs(addLeadingZeros(updatedMs, 3));
   };
 
+  const addLeadingZeros = (num, length) => {
+    let zeros = "";
+    for (let i = 0; i < length; i++) {
+      zeros += "0";
+    }
+    return (zeros + num).slice(-length);
+  };
+
   useEffect(() => {
     if (seconds <= -1) {
       //To do: save the score
@@ -47,7 +56,7 @@ export default function Game({ history }) {
   const keyUpHandler = useCallback(
     (e) => {
       console.log(e.key, currentCharacter);
-      if (e.key == currentCharacter) {
+      if (e.key === currentCharacter) {
         setScore((prevScore) => prevScore + 1);
       } else {
         if (score > 0) {
@@ -56,6 +65,7 @@ export default function Game({ history }) {
       }
       setRandomCharacter();
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentCharacter]
   );
 
@@ -65,14 +75,6 @@ export default function Game({ history }) {
       document.removeEventListener("keyup", keyUpHandler);
     };
   }, [keyUpHandler]);
-
-  const addLeadingZeros = (num, length) => {
-    let zeros = "";
-    for (let i = 0; i < length; i++) {
-      zeros += "0";
-    }
-    return (zeros + num).slice(-length);
-  };
 
   const setRandomCharacter = () => {
     const randomInt = Math.floor(Math.random() * 36);

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import CTA from "../styled/CTA";
 import { Accent, StlyedTitle } from "../styled/Random";
 

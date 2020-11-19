@@ -4,7 +4,7 @@ import { StyledLink } from "../styled/Navbar";
 
 export default function GameOver({ history }) {
   const [score] = useScore();
-  if (score == -1) {
+  if (score === -1) {
     history.push("/");
   }
   return (
